@@ -9,6 +9,8 @@ var transporter = nodemailer.createTransport({
     }
   });
 const signup = function(req,res){
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    console.log(req.body);
     const {username,password,mobileno,email} = req.body;
     User.find({email:email},function(err,foundUser){
         if(err){
@@ -16,7 +18,7 @@ const signup = function(req,res){
         }
         console.log(foundUser);
         if(foundUser.length>=1){
-            res.status(402).json({message:"User With this email already exists"})
+            res.status(200).json({message:"User With this email already exists",state:200})
         }
         else{
             User.create({email:email,name:username,password:password,mobileno:mobileno,verified:false});
@@ -26,7 +28,7 @@ const signup = function(req,res){
             console.log(otp);
             Otp.deleteMany({email:email},function(err,foundotp){
                 if(err){
-                    res.status(402).josn({message:"err"});
+                    res.status(301).josn({message:"err"});
                 }
                 else{
                     console.log('deleted older otps')
@@ -53,6 +55,7 @@ const signup = function(req,res){
     })
 }
 const requestotp = function(req,res){
+    console.log(req.body.email);
     const email = req.body.email;
     var otp = Math.random();
             otp = otp * 1000000;
@@ -93,7 +96,7 @@ const login = function(req,res){
      }
      else{
         if(!foundUser){
-         res.status(200).json({message: "No user found"});
+         res.status(200).json({message: "Inccorect Credential"});
         }
         else{
             if(foundUser.verified){
@@ -138,7 +141,7 @@ const otpverify = function(req,res){
             })
         }
         else{
-            res.status(400).json({messgae:"OTP just entered is wrong"})
+            res.status(200).json({message:"OTP just entered is wrong"})
         }
     })
 }

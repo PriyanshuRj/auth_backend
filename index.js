@@ -2,9 +2,11 @@ require("dotenv").config();
 const express = require('express');
 const app = express();
 const MongoStore = require('connect-mongo');
+var cors = require('cors');
 const port = 8000 || process.env.PORT;
 const session = require('express-session');
 const db = require('./config/mongoose');
+app.use(cors());
 app.use(express.urlencoded());
 const router = require("./routes/index.js");
 app.use(session({
