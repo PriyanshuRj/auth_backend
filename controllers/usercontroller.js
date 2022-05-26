@@ -4,8 +4,8 @@ const nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'priyanshurajput0071109@gmail.com',
-      pass: 'Rajput@11092001'
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD
     }
   });
 const signup = function(req,res){
@@ -47,7 +47,7 @@ const signup = function(req,res){
                if (err) {
                  console.log(err)
                } else {
-                 console.log(info);
+                 console.log("Mail Send");
                }
            });
             res.status(200).json({message:"User created !!"});
@@ -82,13 +82,14 @@ const requestotp = function(req,res){
                if (err) {
                  console.log(err)
                } else {
-                 console.log(info);
+                 console.log("Mail Send");
                }
             })
             res.status(200).json({message:"OTP send successfully !!"});
 }
 const login = function(req,res){
  const {email,password} = req.body;
+ console.log(req.body);
  User.findOne({email:email,password:password},function(err,foundUser){
      if(err){
          console.log("Error!!");
