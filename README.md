@@ -1,6 +1,6 @@
 # Authentication
 
-This repository contains  ExpressJS API's based backend code that can be used to add and get a report of a market/mandi.
+This repository contains  ExpressJS API's based backend code that can be used to login adn signup
 
 
 ## 👨🏻‍🔬 Set up and run The Server
